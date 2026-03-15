@@ -54,8 +54,9 @@ contract PreOrderToken is SimpleERC20 {
     emit TokenPurchased(msg.sender, msg.value, tokenAmount);
     }
     
-    function transfer(address _to, uint256 _value) public override returns (bool) {
-    if (!finalized && msg.sender != address(this) && initialTransferDone) {
+    // day13不用override，换个新名字
+    function preOrderTransfer(address _to, uint256 _value) public returns (bool){
+        if (!finalized && msg.sender != address(this) && initialTransferDone) {
         require(false, "Tokens are locked until sale is finalized");
     }
     return super.transfer(_to, _value);
